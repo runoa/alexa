@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Alexa Hot Site Ranking</title>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/style.css" />
+</head>
+<body>
+
+<header>
+  <h1>
+    <a href="/">Alexa Hot Site Ranking</a>
+  </h1>
+
+  <form action="" method="get" id="search">
+    <input type="hidden" name="start_rank" value="1" />
+    <input type="hidden" name="end_rank" value="20" />
+    <label>
+      <p>日付</p>
+      <input type="text" name="date" value="{{ date }}" />
+    </label>
+    <input type="submit" name="submit" value="検索" />
+  </form>
+</header>
+
+
+<section id="content">
+
+  <article id="result">
+    <nav class="date">
+      <ul>
+        <!--{% for day in days %}-->
+        <li>
+          <a href="{{ day['link'] }}">{{ day['name'] }}</a>
+        </li>
+        <!--{% end %}-->
+      </ul>
+    </nav>
+    <h2>{{ date }}</h2>
+
+    <section id="ranking_diff">
+      <h3>急変動ランキング</h3>
+
+      <table class="ranking">
+        <thead>
+          <tr>
+            <th class="rank">順位</th>
+            <th class="rank_last">変化</th>
+            <th class="domain">ドメイン</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--{% for d in ranking %}-->
+          <tr>
+            <td>{{ d['point_rank'] }}</a></td>
+            <td>{{ d['point_diff'] }}</a></td>
+            <td><a href="{{ d['point_link'] }}">{{ d['point_domain'] }}</a></td>
+          </tr>
+          <!--{% end %}-->
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ranking_daily">
+      <h3>デイリーランキング</h3>
+      <table class="ranking">
+        <thead>
+          <tr>
+            <th class="rank">順位</th>
+            <th class="rank_last">変化</th>
+            <th class="domain">ドメイン</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--{% for d in ranking %}-->
+          <tr>
+            <td>{{ d['daily_rank'] }}</a></td>
+            <td>{{ d['daily_diff'] }}</a></td>
+            <td><a href="{{ d['daily_link'] }}">{{ d['daily_domain'] }}</a></td>
+          </tr>
+          <!--{% end %}-->
+        </tbody>
+      </table>
+    </section>
+
+  </article>
+
+
+  <nav class="pager">
+    <ul>
+    <!--{% for nav in nav_list %}-->
+      <li><a href="{{ nav['link'] }}">{{ nav['name'] }}</a></li>
+    <!--{% end %}-->
+    </ul>
+  </nav>
+
+</section>
+
+<!-- delete footer -->
+<footer>
+  <p>geishatokyo.com</p>
+</footer>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+@charset "utf-8";
+
+/*
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+
+/**
+ * geishatokyo.com
+ * .css
+ * @author : t_hida
+*/
+
+body{
+  max-width:960px;
+  margin:0px auto;
+}
+
+a{
+  text-decoration:none;;
+}
+
+header{
+  position:relative;
+  top:0px;
+  left:0px;
+  line-height:60px;
+  overflow:hidden;
+}
+header form{
+  position:absolute;
+  right:0px;
+  top:0px;
+  padding:4px;
+  margin:0px 10px;
+  border-radius:4px;
+}
+
+footer{
+  border-top:1px solid #000000;
+  line-height:60px;
+  font-size:12px;
+  text-align:center;
+}
+
+h1{
+  margin:2px 0px;
+  line-height:60px;
+  font-size:36px;
+  font-weight:bold;
+  text-indent:1em;
+  white-space:nowrap;
+}
+h1 a{
+  color:#000000;
+}
+
+h2{
+  margin:2px 0px;
+  line-height:32px;
+  font-size:18px;
+  text-indent:1em;
+  background-color:#000000;
+  color:#ffffff;
+}
+h3{
+  margin:2px 0px;
+  line-height:32px;
+  font-size:18px;
+  text-indent:1em;
+  white-space:nowrap;
+  background-color:#000000;
+  color:#ffffff;
+}
+/*--------------------------------
+#id
+--------------------------------*/
+#content{
+  padding:10px;
+  margin:10px auto;
+}
+#result{
+  padding:10px;
+}
+#result:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+#result > section{
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  float:left;
+  width:50%;
+  min-width:300px;
+  padding:10px;
+}
+
+
+nav.pager ui{
+  
+}
+
+article.result{
+
+}
+
+/*--------------------------------
+form
+--------------------------------*/
+#search{
+}
+#search label{
+  display:inline-block;
+}
+#search label:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+#search label > *{
+}
+
+#search label p{
+  display:inline-block;
+  height:24px;
+  line-height:24px;
+}
+#search input{
+  height:24px;
+  line-height:24px;
+}
+#search input[type="text"]{
+  width:120px;
+}
+#search input[type="submit"]{
+  height:28px;
+  width:60px;
+}
+
+/*--------------------------------
+table.ranking
+--------------------------------*/
+table.ranking{
+  border:1px solid #000000;
+  width:100%;
+  table-layout:fixed;
+}
+table.ranking thead{
+  background-color:#666666;
+  color:#ffffff;
+}
+table.ranking th{
+  padding:4px;
+  height:32px;
+  border:1px solid #ffffff;
+  text-align:center;
+}
+table.ranking th.rank,
+table.ranking th.rank_last{
+  width:60px;
+}
+table.ranking tbody tr:nth-child(2n){
+  background-color:#cccccc;
+}
+table.ranking tbody td{
+  text-align:right;
+  padding:4px;
+  border:1px solid #000000;
+  height:24px;
+  max-height:24px;
+  line-height:24px;
+  white-space:nowrap;
+  overflow:hidden;
+}
+table.ranking tbody tr:hover{
+  background-color:#cceeff;
+  cursor:pointer;
+}
+table.ranking tbody td a{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+/*--------------------------------
+nav.pager
+--------------------------------*/
+nav.pager{
+  padding:10px;
+  text-align:center;
+}
+nav.pager ul{
+  display:inline-block;
+  margin:0px auto;
+}
+nav.pager ul:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+nav.pager ul > li{
+  float:left;
+  width:80px;
+  height:24px;
+  line-height:24px;
+  margin:2px 4px;
+  border:1px solid #000000;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+nav.pager ul > li a{
+  display:block;
+  width:100%;
+  height:100%;
+  background-color:#dddddd;
+  color:#000000;
+  paddding:4px;
+}
+nav.pager ul > li a:hover{
+  background-color:#ffffcc;
+}
+
+/*--------------------------------
+nav.date
+--------------------------------*/
+nav.date{
+  padding:10px;
+  text-align:center;
+}
+nav.date ul{
+  display:inline-block;
+  margin:0px auto;
+}
+nav.date ul:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+nav.date ul > li{
+  float:left;
+  width:60px;
+  height:24px;
+  line-height:24px;
+  margin:2px 4px;
+  border:1px solid #000000;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+nav.date ul > li a{
+  display:block;
+  width:100%;
+  height:100%;
+  background-color:#dddddd;
+  color:#000000;
+  paddding:4px;
+}
+nav.date ul > li a:hover{
+  background-color:#ffffcc;
+}
+
+
+@media (max-width: 640px){
+  h1{
+    font-size:24px;
+  }
+  form{
+    display:none;
+  }
+  #content,
+  #result,
+  section{
+    width:100% !important;
+    margin:0px !important;
+    padding:0px !important;
+  }
+}
