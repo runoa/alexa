@@ -5,6 +5,8 @@ import datetime
 import re
 
 class TimeUtils():
+    def __init__(self):
+        self.file = open("log.txt", "w")
     def start(self):
         self.start = datetime.datetime.today()
         self.bef = self.start
@@ -13,6 +15,10 @@ class TimeUtils():
         d = datetime.datetime.today() - self.bef
         self.bef = datetime.datetime.today()
         return d
+    def log(self, key):
+        d = datetime.datetime.today() - self.bef
+        self.bef = datetime.datetime.today()
+        self.file.writelines("%s : %s\n" % (key, d))
     def end(self):
         time = datetime.datetime.today() - self.start
         return time
@@ -25,7 +31,8 @@ class TimeUtils():
 
 if __name__ == "__main__":
     t = TimeUtils()
+    test = {"aaa" : 10}
     print t.start()
     for i in range(100):
-        pass
+        t.log("%d : %s" % (i, test))
     print t.end()

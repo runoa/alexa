@@ -3,7 +3,7 @@ $(function(){
     var href = $(this).find('a').attr('href');
     console.log(href);
     if(/^http/.test(href)){
-      window.open(href);
+      window.open(href, "_self");
     }
     return false;
   });

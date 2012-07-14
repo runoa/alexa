@@ -15,8 +15,8 @@ class CSV2Mongo():
         self.ranking = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.ranking
         self.time_utils = time_utils.TimeUtils()
 
-#ZipFile instance has no attribute '__exit__'
-#↑のエラーが出てwith が使えない..
+    #ZipFile instance has no attribute '__exit__'
+    #ってエラーが出てwith が使えない..
     def zcat_with(self, file_path):
         with zipfile.ZipFile(file_path, 'r') as zip_file:
             return '\n'.join([zip_file.read(filename) for filename in zip_file.namelist()])
@@ -31,37 +31,43 @@ class CSV2Mongo():
         else:
             return open(file_path)
 
-    def get_last_rank(self, domain, today, back_date):
-        end = self.time_utils.n_day_ago(today, back_date)
+    def get_last_rank(self, domain, date, back_date):
+        yesterday = self.time_utils.n_day_ago(date, back_date)
         try:
-            query = {"domain" : domain, "date" : end}
-            last_data = self.ranking.find_one(query)
-            return last_data["rank"]
+            query = {"date" : yesterday, "domain" : domain}
+            yesterday_data = self.ranking.find_one(query)
+            return yesterday_data["rank"]
+        #指定された日を検索して、
+        #見つからなかったら1週間遡って探す
         except:
-            start = self.time_utils.n_day_ago(today, back_date - 7)
-            date_range = {"date" : {"$lt" : end, "$gt" : start}}
-            query = {"domain" : domain, "date" : date_range}
+            week_ago = self.time_utils.n_day_ago(date, back_date + 7)
+            date_range = {"$lt" : yesterday, "$gte" : week_ago}
+            query = {"date" : date_range, "domain" : domain}
             try:
                 last_data = self.ranking.find(query).sort("date", pymongo.DESCENDING)
                 return last_data[0]["rank"]
             except:
                 return ""
 
-    def get_some_last_rank(self, domain, rank, today):
+    def get_some_last_rank(self, domain, rank, date):
         data = {}
-        for i in [1, 30]:
+        isit = 1
+        for i in [1, 7, 30]:
             key = "%d days ago" % i
-            last_rank = self.get_last_rank(domain, today, i)
-            try:
-                difference = rank - last_rank
-            except:
-                difference = "new"
+            #一度見つからなかったら、以降は全部"new"
+            if isit == 1:
+                last_rank = self.get_last_rank(domain, date, i)
+                try:
+                    difference = rank - last_rank
+                except:
+                    difference = "new"
+                    isit = 0
             #値が小さいほどアクセス数が増えている
             data.update({key : difference})
         return data
 
     def array2mongo(self, array, date):
-        self.time_utils.start()
+        #self.time_utils.start()
         self.datelist.insert({"date" : date})
         for data in array:
             rank = int(data[0])
@@ -69,7 +75,8 @@ class CSV2Mongo():
             insert_data = {"date" : date, "rank" : rank, "domain" : domain}
             insert_data.update(self.get_some_last_rank(domain, rank, date))
             self.ranking.insert(insert_data)
-        self.time_utils.end()
+            #self.time_utils.log("%d - %s" % (rank, insert_data))
+        #print self.time_utils.end()
 
     def csv2mongo(self, data_file_path):
         csvfile = self.get_csv(data_file_path)

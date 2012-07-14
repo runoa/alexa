@@ -60,11 +60,11 @@ def create_nav_list(ranges, date):
 def _create_day(date):
     return {u'link': u'/?%s' % urllib.urlencode({'date': date, 'start_rank':str(1), 'end_rank':str(20)}), u'name':date.strftime('%m/%d')}
 
-def last_ndays(n=7, date=datetime.date.today()):
-    return [date - datetime.timedelta(days=days) for days in range(n)]
+def last_ndays(date=datetime.date.today()):
+    return [date - datetime.timedelta(days=days) for days in range(-4, 4)]
 
 def create_days(date):
-    return [_create_day(d) for d in last_ndays()]
+    return [_create_day(d) for d in last_ndays(date)]
 
 class MainHandler(tornado.web.RequestHandler):
     def initialize(self):
