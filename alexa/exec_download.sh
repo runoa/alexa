@@ -1,3 +1,4 @@
-source ~/.virtualenvs/alexa/bin/activate
-python /Users/uranoshouhei/Documents/geisha/alexa/alexa/getCSV.py ../config.ini
-purge
+#!/bin/sh
+source $HOME/.bash_profile
+workon alexa
+python $HOME/alexa/alexa/getCSV.py $HOME/alexa/config.ini

@@ -32,6 +32,7 @@ class GetCSV():
 
 if __name__ == "__main__":
 #    config_alexa.setup_options("../config.ini")
-    config_alexa.setup_options("/Users/uranoshouhei/Documents/geisha/alexa/config.ini")
+    config_alexa.setup_options("/Users/uranoshouhei/alexa/config.ini")
+    
     g = GetCSV()
     g.get_csv()

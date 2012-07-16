@@ -1,11 +1,13 @@
 #!/bin/sh
-source ~/.virtualenvs/alexa/bin/activate
+home=$HOME/alexa
+month=2012-06-
+source $HOME/.bash_profile
+workon alexa
 date
-for date in 03 04 05
+for date in 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
 do
     echo 2012-06-$date
-    time python csv2mongo.py ../config.ini data/2012-06-$date.csv
-    time python point2mongo.py ../config.ini 2012-06-$date
+    time python $home/alexa/csv2mongo.py $home/config.ini $home/alexa/data/$month$date.csv
+    time python $home/alexa/point2mongo.py $home/config.ini $month$date
     date
-    purge
 done

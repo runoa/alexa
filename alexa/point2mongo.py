@@ -9,7 +9,7 @@ import time_utils
 class Point2Mongo():
     def __init__(self):
         self.ranking = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.ranking
-        self.pointrank = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.pointrank
+        self.pointranking = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.pointranking
         self.time_utils = time_utils.TimeUtils()
 
     def calc_point(self, rank, days_ago, weeks_ago, months_ago):
@@ -21,7 +21,7 @@ class Point2Mongo():
         return point
 
     def rank2point(self):
-        pointrank = []
+        pointranking = []
         rank_range = {"$lte" : 100000, "$gte" : 1000}
         for data in self.ranking.find({"date" : date, "rank" : rank_range}):
             domain = data["domain"]
@@ -31,10 +31,13 @@ class Point2Mongo():
                 weeks_ago = data["7 days ago"]
             except:
                 weeks_ago = 0
-            months_ago = data["30 days ago"]
+            try:
+                months_ago = data["30 days ago"]
+            except:
+                months_ago = 0
             point = self.calc_point(rank, days_ago, weeks_ago, months_ago)
-            pointrank.append({"domain" : domain, "point" : point, "rank" : rank, "1 days ago" : days_ago})
-        return pointrank
+            pointranking.append({"domain" : domain, "point" : point, "rank" : rank, "1 days ago" : days_ago})
+        return pointranking
 
     def cmp_diff(self, x, y):
         if x["point"] == "new":
@@ -44,15 +47,15 @@ class Point2Mongo():
         else:
             return 1 if x["point"] > y["point"] else -1
 
-    def insert2mongo(self, pointrank, date):
-        for i,d in enumerate(pointrank):
+    def insert2mongo(self, pointranking, date):
+        for i,d in enumerate(pointranking):
             query = {"date" : date, "domain" : d["domain"], "point" : d["point"], "rank" : i+1, "original rank" : d["rank"], "1 days ago" : d["1 days ago"]}
-            self.pointrank.insert(query)
+            self.pointranking.insert(query)
 
     def point2mongo(self, date):
-        pointrank = self.rank2point()
-        pointrank.sort(self.cmp_diff)
-        self.insert2mongo(pointrank, date)
+        pointranking = self.rank2point()
+        pointranking.sort(self.cmp_diff)
+        self.insert2mongo(pointranking, date)
 
 if __name__ == "__main__":
     import sys

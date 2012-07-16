@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import ConfigParser
+#import ConfigParser
 from tornado.options import define, options, parse_config_file, parse_command_line
 import traceback
 import logging

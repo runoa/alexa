@@ -41,9 +41,9 @@ def _get_ranking(daily_data, point_data):
         "point_link"    : alexa_url + point_data["domain"]
     }
 
-def get_ranking(ranking, pointrank, newrank, rank_range, date):
+def get_ranking(ranking, pointranking, newrank, rank_range, date):
     daily_ranking = ranking.find({"date" : date, "rank" : rank_range})
-    point_ranking = pointrank.find({"date" : date, "rank" : rank_range})
+    point_ranking = pointranking.find({"date" : date, "rank" : rank_range})
     new_ranking = newrank.find({"date" : date, "rank" : rank_range})
     rank_list = []
     #newも一緒にzipしたら、要素が少なくてダメになっちゃった
@@ -70,7 +70,7 @@ class MainHandler(tornado.web.RequestHandler):
     def initialize(self):
         self.datelist = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.datelist
         self.ranking = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.ranking
-        self.pointrank = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.pointrank
+        self.pointranking = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.pointranking
         self.newrank = pymongo.Connection(options.mongodb_host, options.mongodb_port).alexa.newrank
         self.time_utils = time_utils.TimeUtils()
 
@@ -85,7 +85,7 @@ class MainHandler(tornado.web.RequestHandler):
             end_rank = 20
         rank_range = {"$gte" : start_rank, "$lte" : end_rank}
 
-        ranking = get_ranking(self.ranking, self.pointrank, self.newrank, rank_range, date)
+        ranking = get_ranking(self.ranking, self.pointranking, self.newrank, rank_range, date)
         nav_list = create_nav_list(NAV_RANGES, date)
         last_seven_days = create_days(date)
         last_seven_days.reverse()

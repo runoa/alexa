@@ -52,7 +52,8 @@ class CSV2Mongo():
     def get_some_last_rank(self, domain, rank, date):
         data = {}
         isit = 1
-        for i in [1, 7, 30]:
+        #for i in [1, 7, 30]:
+        for i in [1]:
             key = "%d days ago" % i
             #一度見つからなかったら、以降は全部"new"
             if isit == 1:
@@ -68,7 +69,6 @@ class CSV2Mongo():
 
     def array2mongo(self, array, date):
         #self.time_utils.start()
-        self.datelist.insert({"date" : date})
         for data in array:
             rank = int(data[0])
             domain = data[1]
@@ -76,6 +76,7 @@ class CSV2Mongo():
             insert_data.update(self.get_some_last_rank(domain, rank, date))
             self.ranking.insert(insert_data)
             #self.time_utils.log("%d - %s" % (rank, insert_data))
+        self.datelist.insert({"date" : date})
         #print self.time_utils.end()
 
     def csv2mongo(self, data_file_path):
