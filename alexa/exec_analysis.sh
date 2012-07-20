@@ -4,7 +4,7 @@ month=2012-07-
 source $HOME/.bash_profile
 workon alexa
 date
-for date in 19
+for date in 25
 do
     echo $month$date
     time python $home/alexa/csv2mongo.py $home/config.ini $home/alexa/data/$month$date.csv

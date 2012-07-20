@@ -31,48 +31,12 @@ class CSV2Mongo():
         else:
             return open(file_path)
 
-    def get_last_rank(self, domain, date, back_date):
-        yesterday = self.time_utils.n_day_ago(date, back_date)
-        try:
-            query = {"date" : yesterday, "domain" : domain}
-            yesterday_data = self.ranking.find_one(query)
-            return yesterday_data["rank"]
-        #指定された日を検索して、
-        #見つからなかったら1週間遡って探す
-        except:
-            week_ago = self.time_utils.n_day_ago(date, back_date + 7)
-            date_range = {"$lt" : yesterday, "$gte" : week_ago}
-            query = {"date" : date_range, "domain" : domain}
-            try:
-                last_data = self.ranking.find(query).sort("date", pymongo.DESCENDING)
-                return last_data[0]["rank"]
-            except:
-                return ""
-
-    def get_some_last_rank(self, domain, rank, date):
-        data = {}
-        isit = 1
-        for i in [1, 7, 30]:
-            key = "%d days ago" % i
-            #一度見つからなかったら、以降は全部"new"
-            if isit == 1:
-                last_rank = self.get_last_rank(domain, date, i)
-                try:
-                    difference = rank - last_rank
-                except:
-                    difference = "new"
-                    isit = 0
-            #値が小さいほどアクセス数が増えている
-            data.update({key : difference})
-        return data
-
     def array2mongo(self, array, date):
         #self.time_utils.start()
         for data in array:
             rank = int(data[0])
             domain = data[1]
             insert_data = {"date" : date, "rank" : rank, "domain" : domain}
-            insert_data.update(self.get_some_last_rank(domain, rank, date))
             self.ranking.insert(insert_data)
             #self.time_utils.log("%d - %s" % (rank, insert_data))
         self.datelist.insert({"date" : date})

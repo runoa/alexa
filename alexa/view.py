@@ -27,11 +27,12 @@ def get_lastday(col):
     return lastday
 
 #newには1daysagoがないから気をつけてね
+#最初はdaily_data["1 days ago"]も計算してたんだけどやめた
 def _get_ranking(daily_data, point_data):
     alexa_url = "http://www.alexa.com/siteinfo/"
     return {
         "daily_rank"    : daily_data["rank"],
-        "daily_diff"    : daily_data["1 days ago"],
+        "daily_diff"    : "---",
         "daily_domain"  : daily_data["domain"],
         "daily_link"    : alexa_url + daily_data["domain"],
 
