@@ -27,7 +27,7 @@ class GetCSV():
         self.unzip()
         os.rename(self.zip_path[:-4], self.csv_path)
 
-        print " --end: get_csv : ", t.end()
+        #print " --end: get_csv : ", t.end()
         return options.csv_cache_directory + csv_filename
 
 if __name__ == "__main__":
@@ -35,4 +35,4 @@ if __name__ == "__main__":
     config_alexa.setup_options("/Users/uranoshouhei/alexa/config.ini")
     
     g = GetCSV()
-    g.get_csv()
+    print g.get_csv()

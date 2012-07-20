@@ -52,8 +52,7 @@ class CSV2Mongo():
     def get_some_last_rank(self, domain, rank, date):
         data = {}
         isit = 1
-        #for i in [1, 7, 30]:
-        for i in [1]:
+        for i in [1, 7, 30]:
             key = "%d days ago" % i
             #一度見つからなかったら、以降は全部"new"
             if isit == 1:

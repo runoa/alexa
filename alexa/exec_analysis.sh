@@ -1,12 +1,12 @@
 #!/bin/sh
 home=$HOME/alexa
-month=2012-06-
+month=2012-07-
 source $HOME/.bash_profile
 workon alexa
 date
-for date in 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+for date in 19
 do
-    echo 2012-06-$date
+    echo $month$date
     time python $home/alexa/csv2mongo.py $home/config.ini $home/alexa/data/$month$date.csv
     time python $home/alexa/point2mongo.py $home/config.ini $month$date
     date
