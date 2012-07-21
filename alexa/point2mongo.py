@@ -31,7 +31,7 @@ class Point2Mongo():
                 return 0;
 
     def get_diff(self, rank, xdays_ago_rank, max):
-        return rank - xdays_ago_rank if xdays_ago_rank == 0 else rank - max
+        return rank - max if xdays_ago_rank == 0 else rank - xdays_ago_rank
 
     def calc_point(self, rank, days_ago, weeks_ago, months_ago):
         day = self.get_diff(rank, days_ago, 1000000)
@@ -55,12 +55,7 @@ class Point2Mongo():
         return pointranking
 
     def cmp_diff(self, x, y):
-        if x['point'] == 'new':
-            return 1
-        elif y['point'] == 'new':
-            return -1
-        else:
-            return 1 if x['point'] > y['point'] else -1
+        return 1 if x['point'] > y['point'] else -1
 
     def insert2mongo(self, pointranking, date):
         for i,d in enumerate(pointranking):
